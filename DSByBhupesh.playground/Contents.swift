@@ -97,3 +97,72 @@ func removeDuplicates(_ array: inout [Int]) -> Int {
     return uniqueIndex + 1
 }
 
+// 6️⃣ Rotate Array by K Positions
+func rotateArray(_ array: inout [Int], by k: Int) {
+    let n = array.count
+    let rotations = k % n
+    array.reverse()
+    array[0..<rotations].reverse()
+    array[rotations..<n].reverse()
+}
+
+// 7️⃣ Find Missing Number (1 to N)
+func findMissingNumber(_ array: [Int]) -> Int {
+    let n = array.count + 1
+    let expectedSum = n * (n + 1) / 2
+    let actualSum = array.reduce(0, +)
+    return expectedSum - actualSum
+}
+let arrWithMissing = [1, 2, 3, 5]
+let missingNumber = findMissingNumber(arrWithMissing)
+
+// 8️⃣ Move All Zeroes to End
+func moveZeroesToEnd(_ array: inout [Int]) {
+    var nonZeroIndex = 0
+    for i in 0..<array.count {
+        if array[i] != 0 {
+            array[nonZeroIndex] = array[i]
+            nonZeroIndex += 1
+        }
+    }
+    while nonZeroIndex < array.count {
+        array[nonZeroIndex] = 0
+        nonZeroIndex += 1
+    }
+}
+
+var arrayWithZeroes = [0, 1, 1, 4, 12, 1]
+moveZeroesToEnd(&arrayWithZeroes)
+print(arrayWithZeroes)
+
+// 9️⃣ Find Maximum Subarray Sum (Kadane’s Algorithm)
+func maxSubArraySum(_ array: [Int]) -> Int {
+    var maxSoFar = array[0]
+    var maxEndingHere = array[0]
+    
+    for i in 1..<array.count {
+        maxEndingHere = max(array[i], maxEndingHere + array[i])
+        maxSoFar = max(maxSoFar, maxEndingHere)
+    }
+    return maxSoFar
+}
+let subArray = [-2,1,-3,4,-1,2,1,-5,4]
+let maxSum = maxSubArraySum(subArray)
+print("Maximum Subarray Sum: \(maxSum)")
+
+// 🔟 Find Two Sum
+func twoSum(_ nums: [Int], _ target: Int) -> [Int] {
+    var map = [Int: Int]()
+
+    for (index, num) in nums.enumerated() {
+        let complement = target - num
+        if let i = map[complement] {
+            return [i, index]
+        }
+        map[num] = index
+    }
+    return []
+}
+
+print(twoSum(subArray, 3))
+
