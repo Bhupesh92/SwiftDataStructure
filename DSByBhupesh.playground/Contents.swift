@@ -250,5 +250,36 @@ let ngeArray = [4, 5, 2, 25]
 let ngeResult = nextGreaterElement(ngeArray)
 print("Next Greater Elements: \(ngeResult)")
 
+// 5️⃣ Evaluate Postfix Expression
+func evaluatePostfix(_ expression: String) -> Int {
+    var stack = Stack<Int>()
+    let tokens = expression.split(separator: " ")
+    
+    for token in tokens {
+        if let num = Int(token) {
+            stack.push(num)
+        } else {
+            let right = stack.pop() ?? 0
+            let left = stack.pop() ?? 0
+            var result = 0
+            
+            switch token {
+            case "+":
+                result = left + right
+            case "-":
+                result = left - right
+            case "*":
+                result = left * right
+            case "/":
+                result = left / right
+            default:
+                break
+            }
+            stack.push(result)
+        }
+    }
+    return stack.pop()!
+}
+
 
 
