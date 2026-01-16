@@ -163,6 +163,92 @@ func twoSum(_ nums: [Int], _ target: Int) -> [Int] {
     }
     return []
 }
+let indices = twoSum([2, 7, 11, 15], 26)
+print("Indices of Two Sum: \(indices)")
 
-print(twoSum(subArray, 3))
+/// ============================================================== ////////////////////////////
+/// ============================================================== ////////////////////////////
+
+// Stack
+// 1️⃣ Implement a Stack Using Array
+struct Stack<T> {
+    private var elements: [T] = []
+    
+    mutating func push(_ element: T) {
+        elements.append(element)
+    }
+    
+    mutating func pop() -> T? {
+        return elements.popLast()
+    }
+    
+    func peek() -> T? {
+        return elements.last
+    }
+    
+    var isEmpty: Bool {
+        return elements.isEmpty
+    }
+    
+    var count: Int {
+        return elements.count
+    }
+}
+
+// 2️⃣ Reverse a String Using Stack
+func reverseString(_ str: String) -> String {
+    var stack = Stack<Character>()
+    for char in str {
+        stack.push(char)
+    }
+    
+    var reversedStr = ""
+    while !stack.isEmpty {
+        if let char = stack.pop() {
+            reversedStr.append(char)
+        }
+    }
+    return reversedStr
+}
+
+// 3️⃣ Valid Parentheses
+func isValidParentheses(_ s: String) -> Bool {
+    var stack = Stack<Character>()
+    let mapping: [Character: Character] = [")": "(", "}": "{", "]": "["]
+    
+    for char in s {
+        if mapping.values.contains(char) {
+            stack.push(char)
+        } else if let expectedOpen = mapping[char] {
+            if stack.isEmpty || stack.pop() != expectedOpen {
+                return false
+            }
+        }
+    }
+    return stack.isEmpty
+}
+
+let parenthesesString = "{[()]}"
+let isValid = isValidParentheses(parenthesesString)
+print("Is Valid Parentheses: \(isValid)")
+
+// 4️⃣ Next Greater Element
+func nextGreaterElement(_ nums: [Int]) -> [Int] {
+    var result = Array(repeating: -1, count: nums.count)
+    var stack = Stack<Int>()
+    
+    for (index, num) in nums.enumerated() {
+        while let last = stack.peek(), nums[last] < num {
+            result[last] = num
+            stack.pop()
+        }
+        stack.push(index)
+    }
+    return result
+}
+let ngeArray = [4, 5, 2, 25]
+let ngeResult = nextGreaterElement(ngeArray)
+print("Next Greater Elements: \(ngeResult)")
+
+
 
