@@ -281,5 +281,52 @@ func evaluatePostfix(_ expression: String) -> Int {
     return stack.pop()!
 }
 
+// 6️⃣ Sort a Stack Using Another Stack
+func sortStack(_ stack: inout Stack<Int>) -> Stack<Int> {
+    var tempStack = Stack<Int>()
+    
+    while !stack.isEmpty {
+        let current = stack.pop()!
+        
+        while !tempStack.isEmpty && tempStack.peek()! > current {
+            stack.push(tempStack.pop()!)
+        }
+        tempStack.push(current)
+    }
+    return tempStack
+}
+
+var unsortedStack = Stack<Int>()
+unsortedStack.push(3)
+unsortedStack.push(1)
+unsortedStack.push(4)
+unsortedStack.push(2)
+let sortedStack = sortStack(&unsortedStack)
+print("Sorted Stack Top Element: \(sortedStack.peek()!)")
+
+// 7️⃣ Min Stack
+class MinStack {
+    private var stack: Stack<(value: Int, currentMin: Int)> = Stack()
+    
+    func push(_ value: Int) {
+        let currentMin = stack.isEmpty ? value : min(value, stack.peek()!.currentMin)
+        stack.push((value, currentMin))
+    }
+    
+    func pop() -> Int? {
+        return stack.pop()?.value
+    }
+    
+    func top() -> Int? {
+        return stack.peek()?.value
+    }
+    
+    func getMin() -> Int? {
+        return stack.peek()?.currentMin
+    }
+}
+
+
+
 
 
