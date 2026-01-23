@@ -193,6 +193,10 @@ struct Stack<T> {
     var count: Int {
         return elements.count
     }
+    
+    var elementsArray: [T] {
+        return elements
+    }
 }
 
 // 2️⃣ Reverse a String Using Stack
@@ -325,6 +329,100 @@ class MinStack {
         return stack.peek()?.currentMin
     }
 }
+
+// 8️⃣ Stock Span Problem
+
+let stockPrices = [100, 80, 60, 70, 60, 75, 85]
+
+func calculateStockSpan(_ prices: [Int]) -> [Int] {
+    var span = Array(repeating: 1, count: prices.count)
+    var stack = [Int]()
+    
+    for i in 0..<prices.count {
+        while let last = stack.last, prices[last] <= prices[i] {
+            stack.removeLast()
+        }
+        span[i] = stack.isEmpty ? i + 1 : i - stack.last!
+        stack.append(i)
+    }
+    return span
+}
+
+
+// 9️⃣ Remove Adjacent Duplicates
+
+func removeDuplicates(_ s: String) -> String {
+    var stack = Stack<Character> ()
+    for ch in s {
+        if ch == stack.peek() {
+            stack.pop()
+        } else {
+            stack.push(ch)
+        }
+    }
+    return stack.elementsArray.reduce("") { $0 + String($1)}
+}
+
+print(removeDuplicates("abbaca"))
+
+// Queue
+// 1️⃣ Implement Queue Using Array
+
+struct Queue<T> {
+    private var elements: [T] = []
+
+    mutating func enqueue(_ value: T) {
+        elements.append(value)
+    }
+
+    mutating func dequeue() -> T? {
+        guard !elements.isEmpty else { return nil }
+        return elements.removeFirst()
+    }
+
+    func peek() -> T? {
+        return elements.first
+    }
+
+    func isEmpty() -> Bool {
+        return elements.isEmpty
+    }
+}
+
+// 2️⃣ Queue Optimized Using Two Pointers (O(1) dequeue)
+struct OptimizedQueue<T> {
+    private var elements: [T] = []
+    private var head: Int = 0
+
+    mutating func enqueue(_ value: T) {
+        elements.append(value)
+    }
+
+    mutating func dequeue() -> T? {
+        guard head < elements.count else { return nil }
+        let element = elements[head]
+        head += 1
+        
+        // Optional: Clean up memory if too many elements have been dequeued
+        if head > elements.count / 2 {
+            elements.removeFirst(head)
+            head = 0
+        }
+        
+        return element
+    }
+
+    func peek() -> T? {
+        guard head < elements.count else { return nil }
+        return elements[head]
+    }
+
+    func isEmpty() -> Bool {
+        return head >= elements.count
+    }
+}       
+
+
 
 
 
