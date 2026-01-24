@@ -365,3 +365,66 @@ func removeDuplicates(_ s: String) -> String {
 
 print(removeDuplicates("abbaca"))
 
+// Queue
+// 1️⃣ Implement Queue Using Array
+
+struct Queue<T> {
+    private var elements: [T] = []
+
+    mutating func enqueue(_ value: T) {
+        elements.append(value)
+    }
+
+    mutating func dequeue() -> T? {
+        guard !elements.isEmpty else { return nil }
+        return elements.removeFirst()
+    }
+
+    func peek() -> T? {
+        return elements.first
+    }
+
+    func isEmpty() -> Bool {
+        return elements.isEmpty
+    }
+}
+
+// 2️⃣ Queue Optimized Using Two Pointers (O(1) dequeue)
+struct OptimizedQueue<T> {
+    private var elements: [T] = []
+    private var head: Int = 0
+
+    mutating func enqueue(_ value: T) {
+        elements.append(value)
+    }
+
+    mutating func dequeue() -> T? {
+        guard head < elements.count else { return nil }
+        let element = elements[head]
+        head += 1
+        
+        // Optional: Clean up memory if too many elements have been dequeued
+        if head > elements.count / 2 {
+            elements.removeFirst(head)
+            head = 0
+        }
+        
+        return element
+    }
+
+    func peek() -> T? {
+        guard head < elements.count else { return nil }
+        return elements[head]
+    }
+
+    func isEmpty() -> Bool {
+        return head >= elements.count
+    }
+}       
+
+
+
+
+
+
+
