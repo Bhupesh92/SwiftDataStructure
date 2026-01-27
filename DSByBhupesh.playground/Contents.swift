@@ -422,6 +422,211 @@ struct OptimizedQueue<T> {
     }
 }       
 
+// 3️⃣ Implement Queue Using Two Stacks
+struct QueueUsingStacks<T> {
+    private var stackIn: Stack<T> = Stack()
+    private var stackOut: Stack<T> = Stack()
+    
+    mutating func enqueue(_ value: T) {
+        stackIn.push(value)
+    }
+    
+    mutating func dequeue() -> T? {
+        if stackOut.isEmpty {
+            while !stackIn.isEmpty {
+                if let value = stackIn.pop() {
+                    stackOut.push(value)
+                }
+            }
+        }
+        return stackOut.pop()
+    }
+    
+    mutating func peek() -> T? {
+        if stackOut.isEmpty {
+            while !stackIn.isEmpty {
+                if let value = stackIn.pop() {
+                    stackOut.push(value)
+                }
+            }
+        }
+        return stackOut.peek()
+    }
+    
+    func isEmpty() -> Bool {
+        return stackIn.isEmpty && stackOut.isEmpty
+    }
+}
+
+// 4️⃣ Reverse a Queue
+
+func reverseQueue<T>(_ queue: inout Queue<T>) {
+    var stack = Stack<T>()
+    
+    while let element = queue.dequeue() {
+        stack.push(element)
+    }
+    
+    while let element = stack.pop() {
+        queue.enqueue(element)
+    }
+}
+
+// 5️⃣ Circular Queue Implementation
+
+struct CircularQueue<T> {
+    private var elements: [T?]
+    private var head: Int = 0
+    private var tail: Int = 0
+    private var capacity: Int
+    private var size: Int = 0
+
+    init(capacity: Int) {
+        self.capacity = capacity
+        self.elements = Array(repeating: nil, count: capacity)
+    }
+
+    mutating func enqueue(_ value: T) -> Bool {
+        guard size < capacity else { return false }
+        elements[tail] = value
+        tail = (tail + 1) % capacity
+        size += 1
+        return true
+    }
+
+    mutating func dequeue() -> T? {
+        guard size > 0 else { return nil }
+        let value = elements[head]
+        elements[head] = nil
+        head = (head + 1) % capacity
+        size -= 1
+        return value
+    }
+
+    func peek() -> T? {
+        return elements[head]
+    }
+    
+    func isEmpty() -> Bool {
+        return size == 0
+    }
+    
+    func isFull() -> Bool {
+        return size == capacity
+    }
+    
+    func currentSize() -> Int {
+        return size
+    }
+    
+}
+
+// 6️⃣ Generate Binary Numbers Using Queue
+func generateBinaryNumbers(n: Int) -> [String] {
+    var result: [String] = []
+    var queue = Queue<String>()
+    queue.enqueue("1")
+    
+    for _ in 0..<n {
+        if let front = queue.dequeue() {
+            result.append(front)
+            queue.enqueue(front + "0")
+            queue.enqueue(front + "1")
+        }
+    }
+    return result
+}
+
+// 7️⃣ First Non-Repeating Character in Stream
+func firstNonRepeatingCharacter(_ stream: String) -> [Character?] {
+    var charCount: [Character: Int] = [:]
+    var queue = Queue<Character>()
+    var result: [Character?] = []
+    
+    for char in stream {
+        charCount[char, default: 0] += 1
+        queue.enqueue(char)
+        
+        while let front = queue.peek(), charCount[front]! > 1 {
+            queue.dequeue()
+        }
+        
+        result.append(queue.peek())
+    }
+    return result
+}
+
+// 8️⃣ Sliding Window Maximum
+
+func slidingWindowMaximum(_ nums: [Int], _ k: Int) -> [Int] {
+    var result: [Int] = []
+    var deque: [Int] = []
+    
+    for i in 0..<nums.count {
+        while !deque.isEmpty && deque.first! <= i - k {
+            deque.removeFirst()
+        }
+        
+        while !deque.isEmpty && nums[deque.last!] < nums[i] {
+            deque.removeLast()
+        }
+        
+        print("index:,deque: \(i) \(deque)")
+        deque.append(i)
+        print("Append index:,deque: \(i) \(deque)")
+        if i >= k - 1 {
+            result.append(nums[deque.first!])
+        }
+    }
+    return result
+}
+
+func interleaveQueue(_ queue: [Int]) -> [Int] {
+    let half = queue.count / 2
+    var q = queue
+    var stack = [Int]()
+
+    for _ in 0..<half {
+        stack.append(q.removeFirst())
+    }
+
+    while !stack.isEmpty {
+        q.append(stack.removeLast())
+    }
+
+    for _ in 0..<half {
+        q.append(q.removeFirst())
+    }
+
+    for _ in 0..<half {
+        stack.append(q.removeFirst())
+    }
+
+    while !stack.isEmpty {
+        q.append(stack.removeLast())
+        q.append(q.removeFirst())
+    }
+    return q
+}
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
