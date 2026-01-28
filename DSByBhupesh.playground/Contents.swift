@@ -609,6 +609,118 @@ func interleaveQueue(_ queue: [Int]) -> [Int] {
     return q
 }
 
+// 🔹 Linked List Node (Base Structure)
+
+class ListNode<T> {
+    var value: T
+    var next: ListNode?
+
+    init(value: T) {
+        self.value = value
+        self.next = nil
+    }
+}
+
+// 1️⃣ Reverse a Linked List
+
+func reverseLinkedList<T>(_ head: ListNode<T>?) -> ListNode<T>? {
+    var prev: ListNode<T>? = nil
+    var current = head
+    
+    while current != nil {
+        let nextTemp = current?.next
+        current?.next = prev
+        prev = current
+        current = nextTemp
+    }
+    return prev
+}
+
+// 2️⃣ Detect Cycle in Linked List
+func hasCycle<T>(_ head: ListNode<T>?) -> Bool {
+    var slow = head
+    var fast = head
+    
+    while fast != nil && fast?.next != nil {
+        slow = slow?.next
+        fast = fast?.next?.next
+        if slow === fast {
+            return true
+        }
+    }
+    return false
+}
+
+// 3️⃣ Find Middle of Linked List
+func findMiddle<T>(_ head: ListNode<T>?) -> ListNode<T>? {
+    var slow = head
+    var fast = head
+    
+    while fast != nil && fast?.next != nil {
+        slow = slow?.next
+        fast = fast?.next?.next
+    }
+    
+    return slow
+}
+
+// 4️⃣ Merge Two Sorted Linked Lists
+func mergeTwoSortedLists<T: Comparable>(_ l1: ListNode<T>?, _ l2: ListNode<T>?) -> ListNode<T>? {
+    let dummy = ListNode(value: l1!.value)
+    var tail: ListNode<T>? = dummy
+    var list1 = l1
+    var list2 = l2
+    
+    while list1 != nil && list2 != nil {
+        if list1!.value < list2!.value {
+            tail?.next = list1
+            list1 = list1?.next
+        } else {
+            tail?.next = list2
+            list2 = list2?.next
+        }
+        tail = tail?.next
+    }
+    
+    if list1 != nil {
+        tail?.next = list1
+    } else {
+        tail?.next = list2
+    }
+            
+    return dummy.next
+}
+// 5️⃣ Remove Nth Node From End of List
+func removeNthFromEnd<T>(_ head: ListNode<T>?, _ n: Int) -> ListNode<T>? {
+    let dummy = ListNode(value: head!.value)
+    dummy.next = head
+    var first: ListNode<T>? = dummy
+    var second: ListNode<T>? = dummy
+    
+    for _ in 0...n {
+        first = first?.next
+    }
+    
+    while first != nil {
+        first = first?.next
+        second = second?.next
+    }
+    
+    second?.next = second?.next?.next
+    return dummy.next
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         
