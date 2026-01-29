@@ -961,14 +961,189 @@ func maxProfit(_ prices: [Int]) -> Int {
 
 maxProfit([7,1,5,3,6,4])
 
+//// TOP 10 MUST-KNOW CODING TRICKS / PATTERNS
 
 
+// 1️⃣ Two Pointer Technique
+
+/*
+ When to use
+ Sorted arrays
+ Reversals
+ Pair problems
+ */
 
 
+func twoPointerApproach() {
+    let arr = [1, 2, 3, 4, 5, 6]
+    var left = 0
+    var right = arr.count - 1
+    
+    while left < right {
+        print("Left: \(arr[left]), Right: \(arr[right])")
+        left += 1
+        right -= 1
+    }
+}
+
+// 2️⃣ Sliding Window technique
+/*
+ When to use
+ Subarrays / substrings
+ “Longest / shortest / at most / exactly K”
+ 
+ Common problems
+ Longest substring without repeats
+ Max sum subarray
+ Substring with K distinct characters
+*/
+
+//func slidingWindowApproach() {
+//    var left = 0
+//
+//    for right in 0..<10 {
+//        print("Window: [\(left), \(right)]")
+//
+//        if condition fails {
+//            left += 1
+//        }
+//    }
+//}
 
 
+// 3️⃣ Hash Map / Frequency Count
 
+/*
+    When to use
+    Counting occurrences
+    Grouping items
+    duplicates
+ 
+ var map = [Int: Int]()
+ map[val, default: 0] += 1
+ 
+    Common problems
+    Two sum
+    Anagram grouping
+    First non-repeating character
 
+ */
+
+// 4️⃣ Set for Uniqueness
+
+/*
+    When to use
+    Track unique items
+    Remove duplicates
+    Membership checks
+ 
+ var set = Set<Int>()
+ if !set.contains(x) {
+     set.insert(x)
+ }
+ 
+ */
+
+// 5️⃣ Prefix / Suffix Accumulation
+
+/*
+    When to use
+    Cumulative sums/products
+    Range queries
+    Dynamic programming base cases
+    
+    var prefixSum = [Int](repeating: 0, count: n + 1)
+    for i in 0..<n {
+        prefixSum[i + 1] = prefixSum[i] + arr[i]
+    }
+    */
+
+// 6️⃣ Fast and Slow Pointers
+/*
+    When to use
+    Cycle detection
+    Middle element finding
+    Linked list problems
+    
+    var slow = head
+    var fast = head
+    while fast != nil && fast?.next != nil {
+        slow = slow?.next
+        fast = fast?.next?.next
+    }
+    */
+
+// 7️⃣ Stack Using Array
+
+/*
+ 
+ When to use
+ Nested structure
+ Matching pairs
+ 
+ Valid parentheses
+ Next greater element
+ Evaluate expressions
+ 
+ var stack = [Character]()
+ stack.append(x)
+ let top = stack.removeLast()
+ 
+*/
+
+// 8️⃣ Greedy Tracking (Min / Max So Far)
+
+/*
+When to use
+Optimization
+Single-pass profit problems
+Pattern
+minVal = min(minVal, current)
+maxAns = max(maxAns, current - minVal)
+Common problems
+Stock buy/sell
+Maximum difference
+
+*/
+
+// 9️⃣ XOR Trick
+/*
+    When to use
+    Find unique elements
+    Bit manipulation
+    Pattern
+    result = 0
+    for num in nums {
+        result ^= num
+    }
+    
+    Common problems
+    Single number
+    Missing number
+    */
+
+// 🔟 Boyer–Moore Voting Algorithm
+/*
+When to use
+Majority element (> n/2)
+Pattern
+var count = 0
+var candidate = 0
+
+for num in nums {
+    if count == 0 {
+        candidate = num
+    }
+    count += (num == candidate) ? 1 : -1
+}
+ 
+Common problems
+Majority element
+*/
+
+/*
+ 
+*/
 
 
 
