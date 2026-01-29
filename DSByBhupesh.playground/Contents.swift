@@ -131,7 +131,7 @@ func moveZeroesToEnd(_ array: inout [Int]) {
     }
 }
 
-var arrayWithZeroes = [0, 1, 1, 4, 12, 1]
+var arrayWithZeroes = [0, 1, 1, 0, 12, 1]
 moveZeroesToEnd(&arrayWithZeroes)
 print(arrayWithZeroes)
 
@@ -712,23 +712,254 @@ func removeNthFromEnd<T>(_ head: ListNode<T>?, _ n: Int) -> ListNode<T>? {
 
 
 
+// Random important DS problems
+
+// 1️⃣ Reverse a String / Array
+func reverse<T>(_ array: inout [T]) {
+    var left = 0
+    var right = array.count - 1
+    while left < right {
+        array.swapAt(left, right)
+        left += 1
+        right -= 1
+    }
+}
+
+//// func reverseString(_ s: String) -> String
+//func reverseString(_ s: String) -> String {
+//    var chars = Array(s)
+//    
+//    var left = 0
+//    var right = chars.count - 1
+//    
+//    while left < right {
+//        chars.swapAt(left, right)
+//        left += 1
+//        right += 1
+//    }
+//    
+//    return String(chars)
+//}
+
+func twoSumDuplicate(_ nums: [Int], _ target: Int) -> [Int] {
+    var map = [Int: Int]()
+
+    for (index, num) in nums.enumerated() {
+        let compliment =  target - num
+        if let i = map[compliment] {
+            return [i, index]
+        }
+        map[num] = index
+    }
+    return []
+}
+
+twoSumDuplicate([2,7,11,15], 13)
+
+func firstUniqueChar(_ s: String) -> Int {
+    var charCount = [Character: Int]()
+
+    
+    for char in s {
+        charCount[char, default: 0] += 1
+    }
+    
+
+    
+    for (index, char) in s.enumerated() {
+        if charCount[char] == 1 {
+            return index
+        }
+    }
+    
+    return -1
+}
+
+func moveZeroes(_ nums: inout [Int]) {
+    var nonZeroIndex = 0
+    
+    for i in 0..<nums.count {
+        if nums[i] != 0 {
+            nums[nonZeroIndex] = nums[i]
+            nonZeroIndex += 1
+        }
+    }
+    
+    while nonZeroIndex < nums.count {
+        nums[nonZeroIndex] = 0
+        nonZeroIndex += 1
+    }
+    print(nums)
+}
+
+var arrayWithZeroes1 = [1,1,0,3,12]
+moveZeroes(&arrayWithZeroes1)
 
 
+func isPalindrome(_ x: Int) -> Bool {
+    let str = String(x)
+    var left = 0
+    var right = str.count - 1
+    let chars = Array(str)
+    while left < right {
+        if chars[left] != chars [right] {
+            return false
+        }
+        left += 1
+        right -= 1
+    }
+    return true
+}
 
+func isPalindromeWithoutConvert(_ x: Int) -> Bool {
+    if x < 0 { return false }
 
+    var original = x
+    var reversed = 0
 
+    while original > 0 {
+        let digit = original % 10
+        reversed = reversed * 10 + digit
+        original /= 10
+    }
 
+    return x == reversed
+}
 
+func missingNumber(_ nums: [Int]) -> Int {
+    let count = nums.count
+    let expectedSum = count * (count + 1) / 2
+    let actualSum = nums.reduce(0, +)
+    return expectedSum - actualSum
+}
 
+// 🔹 Longest Substring Without Repeating Characters
+func lengthOfLongestSubstring(_ s: String) -> Int {
+    var mapToCheckDuplicate = [Character: Int]()
+    var leftPointer = 0
+    var maxLength = 0
+    
+    for (rightPointer, char) in s.enumerated() {
+        if let duplicateIndex = mapToCheckDuplicate[char], duplicateIndex >= leftPointer {
+            leftPointer = duplicateIndex + 1
+        }
+        mapToCheckDuplicate[char] = rightPointer
+        maxLength = max(maxLength, rightPointer - leftPointer + 1)
+    }
+    
+    return maxLength
+}
+// ababc
+func majorityElement(_ nums: [Int]) -> Int {
+    // map to store max count and its value
+    var countMap = [Int: Int]()
+    
+    for (index, num)  in nums.enumerated() {
+        countMap[num, default: 0] += 1
+        if countMap[num]! > nums.count / 2 {
+            return num
+        }
+    }
+    return -1
+}
 
+func majorityByBooyerMoore(_ nums: [Int]) -> Int {
+    var count = 0
+    var candidate: Int?
+    
+    for num in nums {
+        if count == 0 {
+            candidate = num
+        }
+        count += (num == candidate) ? 1 : -1
+    }
+    return candidate!
+}
 
+// Count Digits of a Number
 
-        
+func countDigits(_ n: Int) -> Int {
+    if n == 0 {
+        return 1
+    }
+    var count  = 0
+    var number = n
+    while number >= 1 {
+        number = number / 10
+        count += 1
+    }
+    return count
+}
 
+print(countDigits(124))
 
+func intersection(_ nums1: [Int], _ nums2: [Int]) -> [Int] {
+    var set1 = Set<Int>(nums1)
+    var resultSet = Set<Int>()
+    
+    for num in nums2 {
+        if set1.contains(num) {
+            resultSet.insert(num)
+        }
+    }
+    return Array(resultSet)
+    
+}
 
+// Given an unsorted integer array nums, find the smallest missing positive integer.
+func firstMissingPositive(_ nums: [Int]) -> Int {
+    
+    if nums.count == 0 {
+        return 1
+    }
+    
+    var numSet = Set<Int>(nums)
+    
+    for index in 1...nums.count {
+        if !numSet.contains(index) {
+            return index
+        }
+    }
+    return nums.count + 1
+}
 
+// Given an integer array nums, return an array output such that: output[i] = product of all elements of nums except nums[i] in O(n) time
+func productExceptSelf(_ nums: [Int]) -> [Int] {
+    
+    let n = nums.count
+    var output = Array(repeating: 1, count: n)
+    
+    var leftProduct = 1
+    for i in 0..<n {
+        output[i] = leftProduct
+        leftProduct *= nums[i]
+    }
+    
+    var rightProduct = 1
+    for i in (0..<n).reversed() {
+        output[i] *= rightProduct
+        rightProduct *= nums[i]
+    }
+    
+    return output
+}
 
+func maxProfit(_ prices: [Int]) -> Int {
+    var minPrice = Int.max
+    var maxProfit = 0
+            
+    for price in prices {
+        if price < minPrice {
+            minPrice = price
+        } else if price - minPrice > maxProfit {
+            maxProfit = price - minPrice
+        }
+    }
+    
+    return maxProfit
+}
+
+maxProfit([7,1,5,3,6,4])
 
 
 
