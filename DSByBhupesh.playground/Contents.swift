@@ -710,6 +710,118 @@ func removeNthFromEnd<T>(_ head: ListNode<T>?, _ n: Int) -> ListNode<T>? {
     return dummy.next
 }
 
+// 6️⃣ Check if Linked List is Palindrome
+func isPalindromeLinkedList<T: Equatable>(_ head: ListNode<T>?) -> Bool {
+    var slow = head
+    var fast = head
+    var prev: ListNode<T>? = nil
+    
+    while fast != nil && fast?.next != nil {
+        fast = fast?.next?.next
+        let nextTemp = slow?.next
+        slow?.next = prev
+        prev = slow
+        slow = nextTemp
+    }
+    
+    if fast != nil {
+        slow = slow?.next
+    }
+    
+    while prev != nil && slow != nil {
+        if prev!.value != slow!.value {
+            return false
+        }
+        prev = prev?.next
+        slow = slow?.next
+    }
+    
+    return true
+}
+
+// 7️⃣ Intersection of Two Linked Lists
+func getIntersectionNode<T>(_ headA: ListNode<T>?, _ headB: ListNode<T>?) -> ListNode<T>? {
+    var pointerA = headA
+    var pointerB = headB
+    
+    while pointerA !== pointerB {
+        pointerA = (pointerA == nil) ? headB : pointerA?.next
+        pointerB = (pointerB == nil) ? headA : pointerB?.next
+    }
+    return pointerA
+}
+
+// 8️⃣ Remove Duplicates from Sorted Linked List
+
+func removeDuplicatesFromSortedList<T: Equatable>(_ head: ListNode<T>?) -> ListNode<T>? {
+    var current = head
+    
+    while current != nil && current?.next != nil {
+        if current!.value == current!.next!.value {
+            current?.next = current?.next?.next
+        } else {
+            current = current?.next
+        }
+    }
+    return head
+}
+
+// 9️⃣ Add Two Numbers Represented by Linked Lists
+func addTwoNumbers(_ l1: ListNode<Int>?, _ l2: ListNode <Int>?) -> ListNode<Int>? {
+    let dummy = ListNode(value: 0)
+    var p = l1
+    var q = l2
+    var current = dummy
+    var carry = 0
+    while p != nil || q != nil {
+        let x = p?.value ?? 0
+        let y = q?.value ?? 0
+        let sum = carry + x + y
+        carry = sum / 10
+        current.next = ListNode(value: sum % 10)
+        current = current.next!
+        p = p?.next
+        q = q?.next
+    }
+    if carry > 0 {
+        current.next = ListNode(value: carry)
+    }
+    return dummy.next
+}
+
+// 🔟 Rotate Linked List
+func rotateRight<T>(_ head: ListNode<T>?, _ k: Int) -> ListNode<T>? {
+    guard let head = head else { return nil }
+    
+    var length = 1
+    var tail = head
+    while tail.next != nil {
+        tail = tail.next!
+        length += 1
+    }
+    
+    let rotations = k % length
+    if rotations == 0 { return head }
+    
+    tail.next = head
+    var stepsToNewHead = length - rotations
+    var newTail: ListNode<T>? = tail
+    while stepsToNewHead > 0 {
+        newTail = newTail?.next
+        stepsToNewHead -= 1
+    }
+    let newHead = newTail?.next
+    newTail?.next = nil
+    return newHead
+}
+
+
+
+
+
+
+
+
 
 
 // Random important DS problems
@@ -1144,7 +1256,6 @@ Majority element
 /*
  
 */
-
 
 
 
