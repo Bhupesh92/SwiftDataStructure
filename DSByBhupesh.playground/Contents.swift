@@ -815,6 +815,72 @@ func rotateRight<T>(_ head: ListNode<T>?, _ k: Int) -> ListNode<T>? {
     return newHead
 }
 
+// Top 10 Hash Map Questions in Swift (DSA)
+// 1️⃣ Two Sum
+
+func twoSumHashMap(_ nums: [Int], _ target: Int) -> [Int] {
+    // One dictionary to store index and complement value
+    var map = [Int: Int]()
+    
+    for (index, num) in nums.enumerated() {
+        let complement = target - num
+        if let i = map[complement] {
+            return [i, index]
+        }
+        map[num] = index
+    }
+    return []
+}
+
+// 2️⃣ Frequency Count of Elements
+func frequencyCount(_ nums: [Int]) -> [Int: Int] {
+    var frequencyMap = [Int: Int]()
+    for num in nums {
+        frequencyMap[num, default: 0] += 1
+    }
+    return frequencyMap
+}
+
+// 3️⃣ First Non-Repeating Character
+func firstNonRepeatingCharacterHashMap(_ s: String) -> Int? {
+    var charCount = [Character: Int]()
+    for char in s {
+        charCount[char, default: 0] += 1
+    }
+    for (index, char) in s.enumerated() {
+        if charCount[char] == 1 {
+            return index
+        }
+    }
+    return nil
+}
+
+// 4️⃣ Group Anagrams
+func groupAnagrams(_ strs: [String]) -> [[String]] {
+    var anagramMap = [String: [String]]()
+    for str in strs {
+        let sortedStr = String(str.sorted())
+        anagramMap[sortedStr, default: []].append(str)
+    }
+    return Array(anagramMap.values)
+}
+
+// 5️⃣ Find Duplicate Elements
+func findDuplicates(_ nums: [Int]) -> [Int] {
+    
+    var seen = Set<Int>()
+    var duplicates = Set<Int>()
+    
+    for num in nums {
+        if seen.contains(num) {
+            duplicates.insert(num)
+        } else {
+            seen.insert(num)
+        }
+    }
+    
+    return Array(duplicates)
+}
 
 
 
