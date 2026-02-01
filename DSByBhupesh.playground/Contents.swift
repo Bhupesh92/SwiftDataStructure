@@ -883,12 +883,91 @@ func findDuplicates(_ nums: [Int]) -> [Int] {
 }
 
 
+// 6️⃣ Longest Substring Without Repeating Characters
+func lengthOfLongestSubstringHashMap(_ s: String) -> Int {
+    var charIndexMap = [Character: Int]()
+    var leftPointer = 0
+    var maxLength = 0
+    for (rightPointer, char) in s.enumerated() {
+        if let duplicateIndex = charIndexMap[char], duplicateIndex >= leftPointer {
+            leftPointer = duplicateIndex + 1
+        }
+        charIndexMap[char] = rightPointer
+        maxLength = max(maxLength, rightPointer - leftPointer + 1)
+    }
+    return maxLength
+}
 
 
+// 7️⃣ Subarray Sum Equals K
+func subarraySumEqualsK(_ nums: [Int], _ k: Int) -> Int {
+    var sumCountMap = [Int: Int]()
+    sumCountMap[0] = 1
+    var currentSum = 0
+    var count = 0
+    for num in nums {
+        currentSum += num
+        if let complementCount = sumCountMap[currentSum - k] {
+            count += complementCount
+        }
+        sumCountMap[currentSum, default: 0] += 1
+    }
+    
+    return count
+}
 
+// 8️⃣ Check if Two Strings Are Isomorphic
 
+func isIsomorphic(_ s: String, _ t: String) -> Bool {
+    
+    if s.count != t.count {
+        return false
+    }
+    var mapST = [Character: Character]()
+    var mapTS = [Character: Character]()
+    let sArr = Array(s)
+    let tArr = Array(t)
 
+    for i in 0..<sArr.count {
+        if mapST[sArr[i]] != nil && mapST[sArr[i]] != tArr[i] {
+            return false
+        }
+        if mapTS[tArr[i]] != nil && mapTS[tArr[i]] != sArr[i] {
+            return false
+        }
+        mapST[sArr[i]] = tArr[i]
+        mapTS[tArr[i]] = sArr[i]
+    }
+    return true
+}
 
+// 9️⃣ Top K Frequent Elements
+func topKFrequent(_ nums: [Int], _ k: Int) -> [Int] {
+    var frequencyMap = [Int: Int]()
+    for num in nums {
+        frequencyMap[num, default: 0] += 1
+    }
+    let sortedElements = frequencyMap.sorted { $0.value > $1.value }
+    print(sortedElements)
+    var result: [Int] = []
+    for i in 0..<k {
+        result.append(sortedElements[i].key)
+    }
+    
+    return result
+}
+
+// 🔟 Intersection of Two Arrays
+func intersectionOfArrays(_ nums1: [Int], _ nums2: [Int]) -> [Int] {
+    var set1 = Set<Int>(nums1)
+    var resultSet = Set<Int>()
+    for num in nums2 {
+        if set1.contains(num) {
+            resultSet.insert(num)
+        }
+    }
+    return Array(resultSet)
+}
 
 // Random important DS problems
 
