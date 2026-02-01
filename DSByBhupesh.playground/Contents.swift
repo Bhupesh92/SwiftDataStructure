@@ -969,6 +969,97 @@ func intersectionOfArrays(_ nums1: [Int], _ nums2: [Int]) -> [Int] {
     return Array(resultSet)
 }
 
+// 🔥 Top 20 Swift Programs Using Higher-Order Functions Only
+// 1️⃣ Find Even Numbers from an Array
+func findEvenNumbers(_ nums: [Int]) -> [Int] {
+    return nums.filter {$0 % 2 == 0}
+}
+
+// 2️⃣ Square of Each Element
+func squareElements(_ nums: [Int]) -> [Int] {
+    return nums.map { $0 * $0 }
+}
+
+// 3️⃣ Sum of All Elements
+func sumOfElements(_ nums: [Int]) -> Int {
+    return nums.reduce(0, +)
+}
+
+// 4️⃣ Find Maximum Element
+func findMaximum(_ nums: [Int]) -> Int? {
+   // return nums.max()
+    let fromReduce = nums.reduce(0) { partialResult, val in
+        return partialResult > val ? partialResult : val
+    }
+    return fromReduce
+}
+
+// 5️⃣ Count Occurrences of Each Element
+func countOccurrences(_ nums: [Int]) -> [Int: Int] {
+    return nums.reduce(into: [:]) { counts, num in
+        counts[num, default: 0] += 1
+        
+    }
+}
+
+// 6️⃣ Remove Nil Values
+func removeNilValues(_ array: [Int?]) -> [Int] {
+    return array.compactMap { $0 }
+}
+
+// 7️⃣ Convert Array of Strings to Integers
+
+func convertStringsToIntegers(_ strings: [String]) -> [Int] {
+    return strings.compactMap { Int($0) }
+}
+
+// 8️⃣ Flatten 2D Array
+func flatten2DArray<T>(_ array: [[T]]) -> [T] {
+    return array.flatMap { $0 }
+}
+
+
+let stringNumber: String? = "123"
+
+// Using map results in a nested optional: Optional(Optional(123))
+let mappedResult = stringNumber.map { Int($0) } // Type: Int??
+
+// Using flatMap results in a single optional: Optional(123)
+let flatMappedResult = stringNumber.flatMap { Int($0) } // Type: Int?
+
+// 9️⃣ Check If All Elements Are Positive
+func areAllElementsPositive(_ nums: [Int]) -> Bool {
+    return nums.allSatisfy { $0 > 0 }
+}
+
+// 🔟 Check If Any Element Is Negative
+func isAnyElementNegative(_ nums: [Int]) -> Bool {
+    return nums.contains { $0 < 0 }
+}
+
+// 1️⃣3️⃣ Join Strings with Comma
+func joinStringsWithComma(_ strings: [String]) -> String {
+    let words = ["strings", "2333"]
+    let joined = words.reduce("") { $0.isEmpty ? $1 : $0 + ", " + $1 }
+    return strings.joined(separator: ", ")
+}
+
+// 1️⃣4️⃣ Find Duplicate Elements
+func findDuplicateElements(_ array: [Int]) -> [Int] {
+    return array.reduce([Int: Int]()) { partialResult, val in
+        if let value = partialResult[val] {
+            var newResult = partialResult
+            newResult[val] = value + 1
+            return newResult
+        } else {
+            var newResult = partialResult
+            newResult[val] = 1
+            return newResult
+        }
+    }.filter { $0.value > 1 }.map { $0.key }
+}
+
+print(joinStringsWithComma([("Hello"), String("World"), String("Swift")]))
 // Random important DS problems
 
 // 1️⃣ Reverse a String / Array
