@@ -1493,6 +1493,132 @@ Majority element
  
 */
 
+// 🌳 Tree in Data Structures?
+
+class TreeNode {
+    var val: Int
+    var left: TreeNode?
+    var right: TreeNode?
+
+    init(_ val: Int) {
+        self.val = val
+    }
+}
+
+//🔑 3. Top Tree Algorithms (MASTER THESE = Solve ALL Tree Questions)
+//🧠 Mental Model
+//“Almost every tree problem = Traversal + Condition”
+
+
+// DFS Traversals
+
+// ➤ Inorder (L → Root → R)
+
+func inorderTraversal(_ root: TreeNode?){
+    guard let node = root else { return }
+    inorderTraversal(node.left)
+    print(node.val)
+    inorderTraversal(node.right)
+}
+
+// ➤ Preorder (Root → L → R)
+func preorderTraversal(_ root: TreeNode?){
+    guard let root = root else { return }
+    print(root.val)
+    preorderTraversal(root.left)
+    preorderTraversal(root.right)
+}
+
+// ➤ Postorder (L → R → Root)
+func postorderTraversal(_ root: TreeNode?){
+    guard let root = root else { return }
+    postorderTraversal(root.left)
+    postorderTraversal(root.right)
+    print(root.val)
+}
+
+// 2️⃣ Level Order Traversal (BFS)
+func levelOrderTraversal(_ root: TreeNode?) {
+    guard let root = root else { return }
+    // Make a queue to push breadth-wise nodes
+    // While queue is not empty, run a loop on count of queue and
+    // dequeu queue add value into result array and then insert left and right children of each node to queue.
+    
+    var queue: [TreeNode] = [root]
+    var resut: [[Int]] = []
+    
+    while queue.isEmpty == false {
+        let levelSize = queue.count
+        var currentLevel: [Int] = []
+        
+        for _ in 0..<levelSize {
+            let currentNode = queue.removeFirst()
+            currentLevel.append(currentNode.val)
+            
+            if let left = currentNode.left {
+                queue.append(left)
+            }
+            if let right = currentNode.right {
+                queue.append(right)
+            }
+        }
+        resut.append(currentLevel)
+    }
+    print(resut)
+}
+
+// 3️⃣ Height / Max Depth of Tree
+func maxDepth(_ root: TreeNode?) -> Int {
+    guard let root = root else { return 0 }
+    let leftDepth = maxDepth(root.left)
+    let rightDepth = maxDepth(root.right)
+    return max(leftDepth, rightDepth) + 1
+}
+
+// 4️⃣ Check if Tree is Balanced
+func isBalanced(_ root: TreeNode?) -> Bool {
+    func checkBalance(_ node: TreeNode?) -> Int {
+        guard let node = node else { return 0 }
+        
+        let leftHeight = checkBalance(node.left)
+        if leftHeight == -1 { return -1 }
+        
+        let rightHeight = checkBalance(node.right)
+        if rightHeight == -1 { return -1 }
+        
+        if abs(leftHeight - rightHeight) > 1 {
+            return -1
+        }
+        
+        return max(leftHeight, rightHeight) + 1
+    }
+    
+    return checkBalance(root) != -1
+}
+// 5️⃣ Diameter of Binary Tree // Maximum difference between two nodes
+func diameterOfBinaryTree(_ root: TreeNode?) -> Int {
+    var diameter = 0
+    
+    func depth(_ node: TreeNode?) -> Int {
+        guard let node = node else { return 0 }
+        
+        let leftDepth = depth(node.left)
+        let rightDepth = depth(node.right)
+        
+        diameter = max(diameter, leftDepth + rightDepth)
+        
+        return max(leftDepth, rightDepth) + 1
+    }
+    
+    depth(root)
+    return diameter
+}
+
+
+
+
+
+
 
 
 
