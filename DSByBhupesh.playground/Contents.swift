@@ -1698,3 +1698,35 @@ for num in nums {
     }
     map[sum, default: 0] += 1
 }
+
+// 5️⃣ Fast & Slow Pointers
+// 📌 Use when: Cycle detection, middle of list
+
+func fastSlowPointers(_ head: ListNode<Int>?) {
+    var slow = head
+    var fast = head
+    
+    while fast != nil && fast?.next != nil {
+        slow = slow?.next
+        fast = fast?.next?.next
+    }
+}
+
+// 6️⃣ Stack Pattern
+// 📌 Use when: Nearest greater/smaller, parentheses
+/* Unlocks
+✔ Next greater element
+✔ Histogram area
+✔ Valid parentheses
+ */
+
+func stackPatten() {
+    var stack = [Int]()
+    for num in nums {
+        while !stack.isEmpty && stack.last! < num {
+            stack.removeLast()
+        }
+        stack.append(num)
+    }
+}
+
