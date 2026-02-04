@@ -1614,13 +1614,87 @@ func diameterOfBinaryTree(_ root: TreeNode?) -> Int {
     return diameter
 }
 
+// 🔓 Top DSA Algorithms / Patterns That Unlock Almost All Questions
+// ======
+// 1️⃣ Sliding Window
+/* 📌 Use when: Subarray / substring, “longest”, “shortest”, “k size”, continuous range
+Idea
+Maintain a window and move left/right pointers
+ 
+ Unlocks
+ ✔ Longest substring
+ ✔ Max sum subarray
+ ✔ Window problems
+*/
+
+func slidingWindow(_ s: String) -> Int {
+    let chars = Array(s)
+    var left = 0 //
+    var map = [Character: Int]()
+    var result = 0 // to store the length of longest substring without repeating characters
+
+    for right in 0..<chars.count {
+        map[chars[right], default: 0] += 1
+
+        while map[chars[right]]! > 1 { // If condition fails, move left pointer to shrink the window
+            map[chars[left]]! -= 1
+            left += 1
+        }
+        result = max(result, right - left + 1)
+    }
+    return result
+}
+
+// 2️⃣ Two Pointers
+// 📌 Use when: Sorted array, pairs, reversing
+/*
+ Unlocks
+ ✔ Two Sum (sorted)
+ ✔ Remove duplicates
+ ✔ Palindrome check
+ */
+
+func twoPointers(_ nums: [Int]) {
+    var left = 0
+    var right = nums.count - 1
+
+    while left < right {
+        // logic
+        left += 1
+        right -= 1
+    }
+}
 
 
+// 3️⃣ Hash Map / Frequency Counter
+// 📌 Use when: Lookup, counts, duplicates, anagrams
+/*
+ Unlocks
+ ✔ Two Sum
+ ✔ Group Anagrams
+ ✔ First unique element
+ */
 
+var mapD = [Int: Int]()
+for num in nums {
+    mapD[num, default: 0] += 1
+}
 
+// 4️⃣ Prefix Sum
+// 📌 Use when: Cumulative sums, range queries
 
+/*
+ ✔ Subarray sum equals K
+ ✔ Continuous range sums
+ */
 
-
-
-
-
+var map = [0: 1]
+var sum = 0
+var k = 3
+for num in nums {
+    sum += num
+    if let count = map[sum - k] { // Sum - k is the complement we want to find
+        // found
+    }
+    map[sum, default: 0] += 1
+}
