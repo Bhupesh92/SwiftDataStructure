@@ -1730,3 +1730,123 @@ func stackPatten() {
     }
 }
 
+// 7️⃣ Queue / BFS
+// 📌 Use when: Level order traversal, shortest path
+/*
+ Unlocks
+ ✔ Level order traversal
+ ✔ Graph BFS
+ ✔ Minimum distance
+ */
+/*
+ var queue = [root]
+
+ while !queue.isEmpty {
+     let node = queue.removeFirst()
+     if let l = node.left { queue.append(l) }
+     if let r = node.right { queue.append(r) }
+ }
+ */
+
+//8️⃣ DFS + Recursion
+//📌 Use when: Tree, graph, backtracking
+/*
+ Unlocks
+ ✔ Tree depth
+ ✔ Path sum
+ ✔ Island count
+ */
+
+func dfsRecursion(_ root: TreeNode?) {
+    guard let node = root else { return }
+    // Preorder action
+    dfsRecursion(node.left)
+    // Inorder action
+    dfsRecursion(node.right)
+    // Postorder action
+}
+
+// 9️⃣ Backtracking
+// 📌 Use when: Combinations, permutations
+/*
+ Unlocks
+ ✔ Subsets
+ ✔ Permutations
+ ✔ N-Queens
+ */
+func backtracking(_ path: inout [Int], _ nums: [Int], _ start: Int) {
+    
+//    if condition {
+//        result.append(path)
+//        return
+//    }
+    // process current path
+
+    for i in start..<nums.count {
+        path.append(nums[i])
+        backtracking(&path, nums, i + 1)
+        path.removeLast()
+    }
+}
+
+// 🔟 Divide & Conquer
+// 📌 Use when: Sorted array, binary search
+/*
+ Unlocks
+ ✔ Binary search
+ ✔ Merge sort
+ ✔ Quick select
+ 
+    */
+func divideAndConquer(_ nums: [Int], _ target: Int) -> Int? {
+    var left = 0
+    var right = nums.count - 1
+    
+    while left <= right {
+        let mid = left + (right - left) / 2
+        if nums[mid] == target {
+            return mid
+        } else if nums[mid] < target {
+            left = mid + 1
+        } else {
+            right = mid - 1
+        }
+    }
+    return nil
+}
+
+//1️⃣1️⃣ Greedy
+//📌 Use when: Local best gives global best
+//
+//Unlocks
+//✔ Interval scheduling
+//✔ Activity selection
+//✔ Jump game
+
+func greedyApproach(_ nums: [Int]) {
+    var current = 0
+    for num in nums {
+        // choose local best
+        current += num
+    }
+    // current is global best
+}
+
+/*
+ 🧠 ONE GOLDEN RULE (Remember this)
+ 90% of DSA problems = 1 pattern + small twist
+ If stuck, ask:
+ Is it subarray / substring → Sliding Window
+ Is it tree → DFS/BFS
+ Is it pair / sorted → Two Pointers
+ Is it count / lookup → Hash Map
+ Is it path / decision → Backtracking
+ 
+ 🎯 Interview Cheat Code
+ If stuck, ask yourself:
+ 1️⃣ Contiguous data? → Sliding Window
+ 2️⃣ Sorted / pairs? → Two Pointers
+ 3️⃣ Count / lookup? → Hash Map
+ 4️⃣ Tree / paths? → DFS / Recursion
+ Say this out loud — interviewers love it.
+ */
