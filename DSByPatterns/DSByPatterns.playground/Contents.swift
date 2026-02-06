@@ -268,5 +268,61 @@ func maxArea(_ height: [Int]) -> Int {
     return maxArea
 }
 
+// 🔥 PATTERN 3: Hash Map (10 Questions)
+// Two sum (Unsorted Array)
+//if sorted array is given then we can use two pointer technique to solve the problem in O(n) time complexity, but if the array is unsorted then we can use hash map to solve the problem in O(n) time complexity.
+// Pseudo Code:
+// Create one hashmap to store value as key and index as value
+// Traverse nums , find out if hashmap contains [Target - currentValue] else add index to hashmap
 
+func twoSumUnsorted(_ nums: [Int], _ target: Int) -> [Int]? {
+    var hashMap: [Int: Int] = [:]
+    for (index, num) in nums.enumerated() {
+        if let complement = hashMap[target - num] {
+            return [complement, index]
+        }
+    }
+    return nil
+}
+
+// 2️⃣ First Unique Character
+func firstUniqChar(_ s: String) -> Int {
+    let chars = Array(s)
+    var freq = [Character: Int]()
+    for c in chars { freq[c, default: 0] += 1 }
+    for i in 0..<chars.count where freq[chars[i]] == 1 {
+        return i
+    }
+    return -1
+}
+    
+// 3️⃣ Valid Anagram
+func isAnagram(_ s: String, _ t: String) -> Bool {
+    var map = [Character: Int]()
+    for c in s { map[c, default: 0] += 1 }
+    for c in t {
+        map[c, default: 0] -= 1
+        if map[c]! < 0 { return false }
+    }
+    return map.values.allSatisfy { $0 == 0 }
+}
+
+func containsDuplicate(_ nums: [Int]) -> Bool {
+    var set = Set<Int>()
+    for n in nums {
+        if set.contains(n) { return true }
+        set.insert(n)
+    }
+    return false
+}
+
+// 4️⃣ Group Anagrams
+func groupAnagrams(_ strs: [String]) -> [[String]] {
+        var map = [String: [String]]()
+        for s in strs {
+            let key = String(s.sorted())
+            map[key, default: []].append(s)
+        }
+        return Array(map.values)
+}
 
