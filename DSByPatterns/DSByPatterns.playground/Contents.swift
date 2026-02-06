@@ -326,3 +326,45 @@ func groupAnagrams(_ strs: [String]) -> [[String]] {
         return Array(map.values)
 }
 
+// 🔥 PATTERN 4: DFS / Recursion (10 Questions)
+// 1️⃣ Max Depth of Binary Tree
+// Tree is about traversal, and DFS is one of the tree traversal techniques, so we can use DFS to solve the problem.
+
+class TreeNode {
+    var value: Int = 0
+    var left: TreeNode?
+    var right: TreeNode?
+}
+
+func treeNodeMaxDepth(_ root: TreeNode?) -> Int {
+    guard let root = root else { return 0 }
+    return 1 + max(treeNodeMaxDepth(root.left), treeNodeMaxDepth(root.right))
+}
+
+// 2️⃣ Invert Binary Tree
+// Pseudo Code:
+// If the root is nil, return nil
+// Swap the left and right children of the root
+// Recursively call the function on the left and right children of the root
+func invertTree(_ root: TreeNode?) -> TreeNode? {
+    guard let root = root else { return nil }
+    let leftTree = invertTree(root.left)
+    let rightTree = invertTree(root.right)
+    root.left = rightTree
+    root.right = leftTree
+    return root
+}
+
+// 3️⃣ Path Sum
+// Pseudo Code:
+// If the root is nil, return false
+// If the root is a leaf node and its value is equal to the target sum, return true
+// Recursively call the function on the left and right children of the root, with the target sum minus the value of the root
+
+func pathSum(_ root: TreeNode?, _ targetSum: Int) -> Bool {
+    guard let root = root else { return false }
+    if root.left == nil && root.right == nil {
+        return root.value == targetSum
+    }
+    return pathSum(root.left, targetSum - root.value) || pathSum(root.right, targetSum - root.value)
+}
