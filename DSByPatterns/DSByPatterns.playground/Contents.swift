@@ -152,5 +152,121 @@ func longestOnes(_ nums: [Int], _ k: Int) -> Int {
     return maxLength
 }
 
+// 🔥 PATTERN 2: Two Pointers (10 Questions)
+
+// 1️⃣ Two Sum (Sorted Array)
+
+// Pseudo Code:
+// Take two pointers, one at the start of the array and another at the end of the array
+// Calculate the sum of the elements at the two pointers
+// If the sum is equal to the target, return the indices of the two pointers
+// If the sum is less than the target, move the left pointer to the right
+// If the sum is greater than the target, move the right pointer to the left
+func twoSum(_ numbers: [Int], _ target: Int) -> [Int] {
+    var left = 0
+    var right = numbers.count - 1
+    
+    while left < right {
+        let sum = numbers[left] + numbers[right]
+        
+        if sum == target {
+            return [left, right]
+        } else if sum < target {
+            left += 1
+        } else {
+            right -= 1
+        }
+    }
+    return [] // Return empty array if no solution is found
+}
+    
+
+// 2️⃣ Reverse String
+
+// Pseudo code:
+// Convert srring to an array of characters
+// Use two pointer appoach, one pointer at the start of the array and another at the end of the array
+// Swap the characters at the two pointers and move the pointers towards each other until they meet
+func reverseString(_ s: inout [Character]) {
+    var left = 0
+    var right = s.count - 1
+    
+    while left < right {
+        s.swapAt(left, right)
+        left += 1
+        right -= 1
+    }
+}
+
+// 3️⃣ Valid Palindrome
+// Pseudo Code:
+// Take two pointers, one at the start of the string and another at the end of the string
+// Move the pointers towards each other until they meet, comparing the characters at the two pointers
+// If the characters are not equal, return false
+// If the pointers meet, return true
+
+func isPalindrome(_ s: String) -> Bool {
+    var chars = Array(s.lowercased())
+    var left  = 0
+    var right = chars.count - 1
+    
+    while left < right {
+        if chars[left] != chars[right] {
+            return false
+        }
+        left += 1
+        right -= 1
+    }
+    return true
+}
+
+// 4️⃣ Remove Duplicates from Sorted Array
+// This solution uses a two-pointer technique to solve the problem efficiently in-place with O(1) extra space.
+// Slow pointer , fast pointer technique
+// Pseudo Code:
+// Take two pointers, one slow pointer at the start of the array and another fast pointer at the second element of the array
+// Iterate with the fast pointer through the array, comparing the elements at the slow and fast pointers
+// If the elements are not equal, move the slow pointer to the right and update the element at the slow pointer with the element at the fast pointer
+// If the elements are equal, move the fast pointer to the right
+// Return the length of the array
+func removeDuplicates(_ nums: inout [Int]) -> Int {
+    if nums.isEmpty { return 0 }
+    
+    var slow = 0 // Unique elements index
+    
+    for fast in 1..<nums.count {
+        if nums[slow] != nums[fast] {
+            slow += 1
+            nums[slow] = nums[fast]
+        }
+    }
+    
+    return slow + 1
+}
+
+// 5️⃣ Container With Most Water
+
+// Pseudo code: Two pointer technique
+// Take two pointers, one at the start of the array and another at the end of the array
+// Calculate the area formed by the lines at the two pointers and update the maximum area if needed
+// Move the pointer that has the shorter line towards the other pointer, as the area is limited by the shorter line and we want to try to find a taller line to increase the area
+func maxArea(_ height: [Int]) -> Int {
+    var left = 0
+    var right = height.count - 1
+    var maxArea = 0
+    
+    while left < right {
+        let currentArea = min(height[left], height[right]) * (right - left)
+        maxArea = max(maxArea, currentArea)
+        
+        if height[left] < height[right] {
+            left += 1
+        } else {
+            right -= 1
+        }
+    }
+    return maxArea
+}
+
 
 
