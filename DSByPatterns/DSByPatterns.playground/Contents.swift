@@ -368,3 +368,126 @@ func pathSum(_ root: TreeNode?, _ targetSum: Int) -> Bool {
     }
     return pathSum(root.left, targetSum - root.value) || pathSum(root.right, targetSum - root.value)
 }
+
+// 1️⃣ What is a Graph
+
+// A graph is just:
+//Nodes (vertices) → things
+//Edges → relationships between things
+//Think real life:
+//Cities connected by roads
+//Users connected by friendships
+//Screens connected by navigation
+//Services calling other services
+
+/*
+ Types of graphs you’ll see
+ Type    Meaning
+ Undirected    A — B (both ways)
+ Directed    A → B
+ Weighted    Edge has cost/time
+ Unweighted    All edges equal
+ Cyclic    Has a loop
+ Acyclic    No loops
+ Tree    Special graph (no cycles, n-1 edges)
+ 
+ Core graph patterns (MOST IMPORTANT)
+ Pattern    Key Question
+ Traversal    Can I reach X from Y?
+ Shortest Path    Minimum cost/distance
+ Connected Components    How many groups?
+ Cycle Detection    Is there a loop?
+ Topological Ordering    Valid order of tasks
+ Bipartite Check    Can I divide into 2 groups?
+ Flood Fill    Fill/mark all reachable
+ Union-Find    Dynamic connectivity
+ 
+ 3️⃣ How to Understand a Graph Problem (step-by-step)
+ Step 1: Is it really a graph?
+ Clues:
+ “Connected”, “reachable”
+ “Path”, “route”
+ “Dependencies”
+ “Minimum steps”
+ “Network”, “friends”, “islands”
+ 
+ Step 2: Is it directed or undirected?
+ One-way dependency → Directed
+ Mutual relationship → Undirected
+ 
+ Step 3: Weighted or unweighted?
+ Cost/time/effort → Weighted
+ Steps/levels → Unweighted
+ 
+ Step 4: Which pattern fits?
+ Use this cheat sheet ⬇️
+ Problem asks    Use
+ Any path exists    DFS / BFS
+ Shortest path (no weights)    BFS
+ Shortest path (weights)    Dijkstra
+ All connected groups    DFS / BFS
+ Dependency order    Topological sort
+ Detect cycle    DFS / Union-Find
+ Grid problems    BFS / DFS
+ Dynamic connections    Union-Find
+ 
+ 4️⃣ Mental Model (very important)
+ Graph = “Explore from a node”
+ Almost every solution looks like:
+ for neighbor in graph[node] {
+     if not visited {
+         visit(neighbor)
+     }
+ }
+ That’s it.
+ All complexity comes from what condition stops or updates.
+ 
+ 5️⃣ BFS vs DFS (when to use what)
+ BFS
+ Level by level
+ Shortest path (unweighted)
+ Queue-based
+ Use BFS when:
+ “minimum steps”
+ “nearest”
+ “levels”
+ DFS
+ Go deep
+ Detect cycles
+ Count components
+ Backtracking
+ Use DFS when:
+ “explore everything”
+ “is there a loop”
+ “all paths / combinations”
+ */
+
+// 1️⃣ Number of Islands
+// Pseudo Code:
+// Iterate through each cell in the grid
+// If the cell is land (1), perform a DFS/BFS to mark all connected land as visited (change to 0) and increment the island count
+// Return the total island count
+func numIslands(_ grid: [[Character]]) -> Int {
+    var grid = grid
+    var count = 0
+    for i in 0..<grid.count {
+        for j in 0..<grid[0].count {
+            if grid[i][j] == "1" {
+                count += 1
+                dfs(&grid, i, j)
+            }
+        }
+    }
+    return count
+}
+
+func dfs(_ grid: inout [[Character]], _ i: Int, _ j: Int) {
+    if i < 0 || i >= grid.count || j < 0 || j >= grid[0].count || grid[i][j] == "0" {
+        return
+    }
+    grid[i][j] = "0" // Mark as visited
+    dfs(&grid, i + 1, j) // Down
+    dfs(&grid, i - 1, j) // Up
+    dfs(&grid, i, j + 1) // Right
+    dfs(&grid, i, j - 1) // Left
+}
